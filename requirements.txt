@@ -3,6 +3,5 @@ djangorestframework
 psycopg2-binary
 python-decouple
 pillow
-simplejwt
 djangorestframework-simplejwt
 dj-config-url

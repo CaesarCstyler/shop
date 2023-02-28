@@ -39,4 +39,7 @@ class ForgotPasswordAPIView(APIView):
 
 class ForgotPasswordCompleteAPIView(APIView):
     def post(self, requset):
-        pass
+        serializer = ForgotPasswordCompleteSerializer(data=requset.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.set_new_password()
+        return Response('Password is successfuly changed')
