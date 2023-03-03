@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import status, generics
+from rest_framework import status, generics, viewsets, mixins
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -63,7 +63,38 @@ class ProductAPIView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save(owner=request.user)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+
+
+class ProductViewSet(viewsets.ViewSet):
+    def list(self, request): # GET
+        products = Product.objects.all()
+        serializer = ProductSerializer(products, many=True)
+        return Response(serializer.data)
+
+    def create(self, request): # POST
+        serializer = ProductSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(owner=request.user)
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class ProductModelViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+    # def list(self, request, *args, **kwargs):
+    #     return Response('hello')
+
+class ProductMixin(mixins.CreateModelMixin,
+                   mixins.RetrieveModelMixin,
+                #    mixins.UpdateModelMixin,
+                #    mixins.DestroyModelMixin,
+                   mixins.ListModelMixin,
+                   viewsets.GenericViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
 
 # ViewSet, ModelViewSet, mixins

@@ -12,3 +12,6 @@ git:
 	git add .
 	git commit -m 'make commit'
 	git push origin main
+
+pip:
+	pip install -r requirements.txt

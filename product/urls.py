@@ -1,5 +1,12 @@
-from django.urls import path
+from rest_framework.routers import DefaultRouter
+from django.urls import path, include
 from product.views import *
+
+router = DefaultRouter()
+router.register('viewset_get_post', ProductViewSet, basename='products')
+router.register('modelviewset_crud', ProductModelViewSet)
+router.register('product_mixin', ProductMixin)
+
 
 urlpatterns = [
     path('func_get/', get_product),
@@ -10,4 +17,8 @@ urlpatterns = [
     path('generic_get_post/', ProductListCreateGenericView.as_view()),
 
     path('apiview_get_post/', ProductAPIView.as_view()),
+
+    path('', include(router.urls))
+
+    # path('viewset_get_post/', ProductViewSet.as_view({'get': 'list', 'post': 'create'})),
 ]
