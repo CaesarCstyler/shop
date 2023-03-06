@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'account',
     'product',
     'order',
+    'spam',
 ]
 
 MIDDLEWARE = [
@@ -166,3 +167,6 @@ SIMPLE_JWT = {
 CORS_ALLOWED_ORIGINS = [
         'http://localhost:3000'
 ]
+
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'

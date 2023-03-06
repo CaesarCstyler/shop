@@ -18,6 +18,8 @@ urlpatterns = [
 
     path('apiview_get_post/', ProductAPIView.as_view()),
 
+    path('hello/', get_hello),
+
     path('', include(router.urls))
 
     # path('viewset_get_post/', ProductViewSet.as_view({'get': 'list', 'post': 'create'})),
