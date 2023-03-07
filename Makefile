@@ -15,3 +15,6 @@ git:
 
 pip:
 	pip install -r requirements.txt
+
+test:
+	python3 manage.py test

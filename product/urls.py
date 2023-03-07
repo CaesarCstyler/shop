@@ -6,6 +6,7 @@ router = DefaultRouter()
 router.register('viewset_get_post', ProductViewSet, basename='products')
 router.register('modelviewset_crud', ProductModelViewSet)
 router.register('product_mixin', ProductMixin)
+router.register('category', CategoryAPIView)
 
 
 urlpatterns = [

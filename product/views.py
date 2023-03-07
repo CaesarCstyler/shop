@@ -1,12 +1,21 @@
 from django.shortcuts import render
 from rest_framework import status, generics, viewsets, mixins
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from product.models import Product
-from product.serializers import ProductSerializer
+from product.models import Product, Category
+from product.serializers import ProductSerializer, CategorySerializer
 from product.tasks import big_function
+
+
+class CategoryAPIView(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+
+
 
 @api_view(['GET'])
 def get_product(request):
@@ -84,6 +93,10 @@ class ProductViewSet(viewsets.ViewSet):
 class ProductModelViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
     # def list(self, request, *args, **kwargs):
     #     return Response('hello')
