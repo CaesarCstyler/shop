@@ -21,7 +21,9 @@ urlpatterns = [
 
     path('hello/', get_hello),
 
-    path('', include(router.urls))
+    path('template/', ProductList.as_view()),
+
+    path('', include(router.urls)),
 
     # path('viewset_get_post/', ProductViewSet.as_view({'get': 'list', 'post': 'create'})),
 ]
